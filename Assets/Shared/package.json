@@ -1,0 +1,19 @@
+{
+  "name": "com.shared.core",
+  "displayName": "Shared Core",
+  "version": "1.5.0",
+  "unity": "2020.1",
+  "unityRelease": "17f1",
+  "description": "This is a package for the core business",
+  "category": "Shared Core",
+  "type": "SharedCore",
+  "license": "MIT",
+  "author": {
+    "name": "DarkKnight"
+  },
+  "keywords": [],
+  "hideInEditor": false,
+  "testables": [
+    "com.shared.core"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "name": {
+    "id": "name",
+    "android": "Eatventure",
+    "ios": "Eatventure"
+  },
+  "bundle_id": {
+    "id": "bundle_id",
+    "android": "com.brickstone.eatventure",
+    "ios": "com.brickstone.eatventure"
+  },
+  "version": {
+    "id": "version",
+    "android": "1.0.0",
+    "ios": "1.0.0"
+  },
+  "org": {
+    "id": "org",
+    "android": "brickstone.live",
+    "ios": "brickstone.live"
+  },
+  "firebase_app": {
+    "id": "firebase_app",
+    "android": "1:57682703115:android:98ac96da848cb2dc20e80e",
+    "ios": "1:57682703115:ios:49a2142170b6274c20e80e"
+  },
+  "firebase_test_groups": {
+    "id": "firebase_test_groups",
+    "android": "Internal",
+    "ios": "Internal"
+  },
+  "firebase_fad_upload_format": {
+    "id": "firebase_fad_upload_format",
+    "android": "apk"
+  },
+  "version_check_enabled": {
+    "id": "version_check_enabled",
+    "android": 0,
+    "ios": 0
+  },
+  "dependencies": {
+    "id": "dependencies",
+    "android": "b150",
+    "ios": "b150"
+  },
+  "release_phase": {
+    "id": "release_phase",
+    "android": "0",
+    "ios": "0"
+  }
+}

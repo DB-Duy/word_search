@@ -1,0 +1,191 @@
+{
+    "GOOGLE_PLAY": {
+        "tarball.com.google.external-dependency-manager": "https://dl.google.com/games/registry/unity/com.google.external-dependency-manager/com.google.external-dependency-manager-1.2.186.tgz",
+        "tarball.com.shared.editor.tool": "UnitySDKs/com.shared.editor.tool-1.5.0.tgz",
+        "unity.package.com.shared.core": "UnitySDKs/com.shared.core-1.5.0.unitypackage",
+        "xml.dependency.Editor": "xmls/ANRWatchDogDependencies.xml",
+        "unity.package.com.zenject": "UnitySDKs/Zenject.clean.unitypackage",
+        "unity.package.com.safe.area": "UnitySDKs/SafeAreaHelper.clean.unitypackage",
+        "unity.package.com.dotween": "UnitySDKs/DOTween_Pro.unitypackage"
+    },
+    "APPSTORE": {
+        "tarball.com.google.external-dependency-manager": "https://dl.google.com/games/registry/unity/com.google.external-dependency-manager/com.google.external-dependency-manager-1.2.186.tgz",
+        "tarball.com.shared.editor.tool": "UnitySDKs/com.shared.editor.tool-1.5.0.tgz",
+        "unity.package.com.shared.core": "UnitySDKs/com.shared.core-1.5.0.unitypackage",
+        "xml.dependency.Editor": "FixConflictDependencies.xml",
+        "upm.com.unity.ads.ios-support": "1.2.0"
+    },
+    "GOOGLE_FIREBASE_APP": {
+        "tarball.com.google.firebase.app": "https://dl.google.com/games/registry/unity/com.google.firebase.app/com.google.firebase.app-13.0.0.tgz",
+        "xml.dependency.Editor": "FirebaseSevices/FirebaseServicesDependencies.xml"
+    },
+    "GOOGLE_FIREBASE_ANALYTICS": {
+        "tarball.com.google.firebase.analytics": "https://dl.google.com/games/registry/unity/com.google.firebase.analytics/com.google.firebase.analytics-13.0.0.tgz"
+    },
+    "GOOGLE_FIREBASE_CRASHLYTICS": {
+        "tarball.com.google.firebase.crashlytics": "https://dl.google.com/games/registry/unity/com.google.firebase.crashlytics/com.google.firebase.crashlytics-13.0.0.tgz"
+    },
+    "GOOGLE_FIREBASE_INSTALLATIONS": {
+        "tarball.com.google.firebase.installations": "https://dl.google.com/games/registry/unity/com.google.firebase.installations/com.google.firebase.installations-13.0.0.tgz"
+    },
+    "GOOGLE_FIREBASE_MESSAGING": {
+        "tarball.com.google.firebase.messaging": "https://dl.google.com/games/registry/unity/com.google.firebase.messaging/com.google.firebase.messaging-13.0.0.tgz"
+    },
+    "GOOGLE_FIREBASE_REMOTE_CONFIG": {
+        "tarball.com.google.firebase.remote-config": "https://dl.google.com/games/registry/unity/com.google.firebase.remote-config/com.google.firebase.remote-config-13.0.0.tgz"
+    },
+    "GOOGLE_PLAY_ASSETDELIVERY": {
+        "tarball.com.google.play.assetdelivery": "https://dl.google.com/games/registry/unity/com.google.play.assetdelivery/com.google.play.assetdelivery-1.9.2.tgz"
+    },
+    "GOOGLE_ANDROID_APPBUNDLE": {
+        "tarball.com.google.android.appbundle": "https://dl.google.com/games/registry/unity/com.google.android.appbundle/com.google.android.appbundle-1.9.0.tgz"
+    },
+    "GOOGLE_PLAY_COMMON": {
+        "tarball.com.google.play.common": "https://dl.google.com/games/registry/unity/com.google.play.common/com.google.play.common-1.9.2.tgz"
+    },
+    "GOOGLE_PLAY_CORE": {
+        "tarball.com.google.play.core": "https://dl.google.com/games/registry/unity/com.google.play.core/com.google.play.core-1.8.5.tgz",
+        "xml.dependency.Editor": "FirebaseSevices/GoogleServicesDependencies.xml"
+    },
+    "GOOGLE_PLAY_REVIEW": {
+        "tarball.com.google.play.review": "https://dl.google.com/games/registry/unity/com.google.play.review/com.google.play.review-1.8.3.tgz"
+    },
+    "GOOGLE_PLAY_APPUPDATE": {
+        "tarball.com.google.play.appupdate": "https://dl.google.com/games/registry/unity/com.google.play.appupdate/com.google.play.appupdate-1.8.3.tgz"
+    },
+    "APPMETRICA": {
+        "upm.io.appmetrica.analytics": "https://github.com/appmetrica/appmetrica-unity-plugin.git#v6.5.2"
+    },
+    "IAP": {
+        "upm.com.unity.purchasing": "4.13.0"
+    },
+    "FACEBOOK_SDK": {
+        "unity.package.facebook": "UnitySDKs/facebook-unity-sdk-18.0.0.clean.unitypackage"
+    },
+    "UNITY_GAMING_SERVICE": {
+        "upm.com.unity.services.analytics": "5.1.1"
+    },
+    "UNITY_LOCALIZATION": {
+        "upm.com.unity.localization": "1.5.4"
+    },
+    "APPS_FLYER": {
+        "unity.package.appsflyer": "UnitySDKs/appsflyer-unity-plugin-6.17.5.unitypackage",
+        "xml.dependency.AppsFlyer.Editor": "AppsFlyer/AppsFlyerMoreDependencies.xml"
+    },
+    "LEVEL_PLAY": {
+        "upm.com.unity.services.levelplay": "8.10.1",
+        "xml.dependency.LevelPlay.Editor": "LevelPlay/IronSourceSDKDependencies.xml"
+    },
+    "AD_QUALITY": {
+        "unity.package.adquality": "https://github.com/ironsource-mobile/Unity-adqualitysdk/releases/download/IronSource_AdQuality_7.26.2/ironsource-adquality-unity3d-v7.26.2.unitypackage"
+    },
+    "USING_UMP": {
+        "unity.package.googleads": "https://github.com/googleads/googleads-mobile-unity/releases/download/v10.4.2/GoogleMobileAds-v10.4.2.unitypackage"
+    },
+    "LEVEL_PLAY_ADMOB": {
+        "xml.dependency.LevelPlay.Editor": "LevelPlay/ISAdMobAdapterDependencies.xml"
+    },
+    "APP_LOVIN": {
+        "xml.dependency.LevelPlay.Editor": "LevelPlay/ISAppLovinAdapterDependencies.xml"
+    },
+    "APS": {
+        "xml.dependency.LevelPlay.Editor": "LevelPlay/ISAPSAdapterDependencies.xml",
+        "unity.package.aps": "UnitySDKs/APS_Core_2_0_0.unitypackage"
+    },
+    "BID_MACHINE": {
+        "xml.dependency.LevelPlay.Editor": "LevelPlay/ISBidMachineAdapterDependencies.xml"
+    },
+    "BIGO": {
+        "xml.dependency.LevelPlay.Editor": "LevelPlay/ISBigoAdapterDependencies.xml"
+    },
+    "LEVEL_PLAY_CHARTBOOST": {
+        "xml.dependency.LevelPlay.Editor": "LevelPlay/ISChartboostAdapterDependencies.xml"
+    },
+    "LEVEL_PLAY_META": {
+        "xml.dependency.LevelPlay.Editor": "LevelPlay/ISFacebookAdapterDependencies.xml"
+    },
+    "FYBER": {
+        "xml.dependency.LevelPlay.Editor": "LevelPlay/ISFyberAdapterDependencies.xml"
+    },
+    "LEVEL_PLAY_HYPRMX": {
+        "xml.dependency.LevelPlay.Editor": "LevelPlay/ISHyprMXAdapterDependencies.xml"
+    },
+    "INMOBI": {
+        "xml.dependency.LevelPlay.Editor": "LevelPlay/ISInMobiAdapterDependencies.xml"
+    },
+    "LEVEL_PLAY_MINTEGRAL": {
+        "xml.dependency.LevelPlay.Editor": "LevelPlay/ISMintegralAdapterDependencies.xml"
+    },
+    "MOBILE_FUSE": {
+        "xml.dependency.LevelPlay.Editor": "LevelPlay/ISMobileFuseAdapterDependencies.xml"
+    },
+    "LEVEL_PLAY_MOLOCO": {
+        "xml.dependency.LevelPlay.Editor": "LevelPlay/ISMolocoAdapterDependencies.xml"
+    },
+    "LEVEL_PLAY_MY_TARGET": {
+        "xml.dependency.LevelPlay.Editor": "LevelPlay/ISMyTargetAdapterDependencies.xml"
+    },
+    "LEVEL_PLAY_OGURY": {
+        "xml.dependency.LevelPlay.Editor": "LevelPlay/ISOguryAdapterDependencies.xml"
+    },
+    "LEVEL_PLAY_PANGLE": {
+        "xml.dependency.LevelPlay.Editor": "LevelPlay/ISPangleAdapterDependencies.xml"
+    },
+    "SMAATO": {
+        "xml.dependency.LevelPlay.Editor": "LevelPlay/ISSmaatoAdapterDependencies.xml"
+    },
+    "LEVEL_PLAY_SUPERAWESOME": {
+        "xml.dependency.LevelPlay.Editor": "LevelPlay/ISSuperAwesomeAdapterDependencies.xml"
+    },
+    "LEVEL_PLAY_UNITYADS": {
+        "xml.dependency.LevelPlay.Editor": "LevelPlay/ISUnityAdsAdapterDependencies.xml"
+    },
+    "LEVEL_PLAY_VERVE": {
+        "xml.dependency.LevelPlay.Editor": "LevelPlay/ISVerveAdapterDependencies.xml"
+    },
+    "LEVEL_PLAY_VUNGLE": {
+        "xml.dependency.LevelPlay.Editor": "LevelPlay/ISVungleAdapterDependencies.xml"
+    },
+    "LEVEL_PLAY_YANDEX": {
+        "xml.dependency.LevelPlay.Editor": "LevelPlay/ISYandexAdapterDependencies.xml"
+    },
+    "LEVEL_PLAY_KIDOZ": {
+        "xml.dependency.LevelPlay.Editor.Custom": "CustomLevelPlay/CustomISKidozAdapterDependencies.xml"
+    },
+    "LEVEL_PLAY_LINEADS": {
+        "xml.dependency.LevelPlay.Editor.Custom": "CustomLevelPlay/CustomISLineAdsAdapterDependencies.xml"
+    },
+    "LEVEL_PLAY_MATICOO": {
+        "xml.dependency.LevelPlay.Editor.Custom": "CustomLevelPlay/CustomISMaticooAdapterDependencies.xml"
+    },
+    "LEVEL_PLAY_OPENWRAP": {
+        "xml.dependency.LevelPlay.Editor.Custom": "CustomLevelPlay/CustomISOpenWrapMediationAdapterDependencies.xml"
+    },
+    "LEVEL_PLAY_TAURUSX": {
+        "xml.dependency.LevelPlay.Editor.Custom": "CustomLevelPlay/CustomISTaurusXAdapterDependencies.xml"
+    },
+    "ODEEO_AUDIO": {
+        "unity.package.odeeo": "UnitySDKs/odeeo-v3.6.1+573-d65b93b-release-remote.unitypackage"
+    },
+    "GADSME_AUDIO": {
+        "unity.package.gadsme": "https://storage.googleapis.com/releases.gadsme.com/unity/GadsmeSDK_1.12.2_Unity2020OrHigher_f418c17.unitypackage"
+    },
+    "AUDIO_MOB": {
+        "unity.package.audiomob": "https://firebasestorage.googleapis.com/v0/b/audiomob-prod.appspot.com/o/AudiomobPlugin_v10.0.4.unitypackage?alt=media&token=fea828bf-bdfc-45a1-bb82-9008dbc672b7"
+    },
+    "GADSME": {
+        "unity.package.gadsme": "https://storage.googleapis.com/releases.gadsme.com/unity/GadsmeSDK_1.12.2_Unity2020OrHigher_f418c17.unitypackage"
+    },
+    "APP_ICON": {
+        "upm.dev.kyubuns.appiconchangerunity": "https://github.com/kyubuns/AppIconChangerUnity.git?path=Assets/AppIconChanger"
+    },
+    "BRIGHT_DATA_SDK": {
+        "unity.package.bright": "UnitySDKs/brdsdk-1.556.953.unitypackage"
+    },
+    "ADVERTY": { 
+        "unity.package.adverty": "https://static.adverty.com/PublicRelease/AdvertySDK_5.0.12_Release_174.unitypackage"
+    },
+    "MOREMOUNTAINS_NICEVIBRATIONS_INSTALLED": {
+        "unity.package.nice.vibrations": "UnitySDKs/NiceVibrations.clean.unitypackage"
+    }
+}

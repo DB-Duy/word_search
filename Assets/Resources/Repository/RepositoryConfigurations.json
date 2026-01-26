@@ -1,0 +1,94 @@
+{
+  "Shared.Repository.Vibration.VibrationEnableRepository": {
+    "name": "Vibration",
+    "default_value": "true"
+  },
+  "Shared.Repository.UIExample.UIExampleIntRepository": {
+    "name": "UIExampleIntRepository",
+    "default_value": ""
+  },
+  "Shared.Repository.TrackingAuthorization.TrackingAuthorizationRepository": {
+    "name": "TrackingAuthorizationRepository",
+    "default_value": "-1"
+  },
+  "Shared.Repository.StoreRating.StoreRatingShownCountRepository": {
+    "name": "StoreRatingShownCountRepository",
+    "default_value": "0"
+  },
+  "Shared.Repository.SharedBright.CanShowEffectHintRewardRepository": {
+    "name": "CanShowEffectHintRewardRepository",
+    "default_value": ""
+  },
+  "Shared.Repository.SharedBright.HintRewardUsedRepository": {
+    "name": "HintRewardUsedRepository",
+    "default_value": ""
+  },
+  "Shared.Repository.Session.SessionCountRepository": {
+    "name": "SessionCountRepository",
+    "default_value": "0"
+  },
+  "Shared.Repository.Session.SessionRepository": {
+    "name": "SessionRepository",
+    "default_value": "{}"
+  },
+  "Shared.Repository.Premium.PremiumEnableRepository": {
+    "name": "PremiumEnableRepository",
+    "default_value": "false"
+  },
+  "Shared.Repository.ParentControl.ParentControlRepository": {
+    "name": "ParentControlRepository",
+    "default_value": "{\"yearOfBirth\":2020,\"gender\":-1}"
+  },
+  "Shared.Repository.ParentControl.ParentControlStepRepository": {
+    "name": "ParentControlStepRepository",
+    "default_value": "{\"step\": -1}"
+  },
+  "Shared.Repository.Level.LevelRepository": {
+    "name": "LevelRepository",
+    "default_value": "1"
+  },
+  "Shared.Repository.Level.TrackingLevelRepository": {
+    "name": "TrackingLevelRepository",
+    "default_value": "-1"
+  },
+  "Shared.Repository.InAppUpdate.InAppUpdateRepository": {
+    "name": "InAppUpdateRepository",
+    "default_value": "{}"
+  },
+  "Shared.Repository.GameInterrupt.GameInterruptRepository": {
+    "name": "GameInterruptRepository",
+    "default_value": "{}"
+  },
+  "Shared.Repository.Firebase.FirebaseRepository": {
+    "name": "FirebaseRepository",
+    "default_value": "{}"
+  },
+  "Shared.Repository.Audio.AudioEnableRepository": {
+    "name": "AudioEnableRepository",
+    "default_value": "true"
+  },
+  "Shared.Repository.Audio.TemporaryAudioEnableRepository": {
+    "name": "TemporaryAudioEnableRepository",
+    "default_value": "true"
+  },
+  "Shared.Repository.AppMetrica.AppMetricaRepository": {
+    "name": "AppMetricaRepository",
+    "default_value": "{}"
+  },
+  "Shared.Repository.Ads.InterstitialAdRepository": {
+    "name": "InterstitialAdRepository",
+    "default_value": "{}"
+  },
+  "Shared.Repository.Ads.MrecPositionRepository": {
+    "name": "MrecPositionRepository",
+    "default_value": "{}"
+  },
+  "Shared.Core.View.Loading.UIActivityIndicatorPool": {
+    "name": "UIActivityIndicatorPool",
+    "default_value": ""
+  },
+  "Shared.Core.View.FloatingMessage.UIFloatingMessagePool": {
+    "name": "UIFloatingMessagePool",
+    "default_value": ""
+  }
+}

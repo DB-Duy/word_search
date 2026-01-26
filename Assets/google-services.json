@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "57682703115",
+    "project_id": "ev-eatventure",
+    "storage_bucket": "ev-eatventure.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:57682703115:android:98ac96da848cb2dc20e80e",
+        "android_client_info": {
+          "package_name": "com.brickstone.eatventure"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaF2uHsnNy_kfUw70i0WoMQ1HnYvFkNuI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

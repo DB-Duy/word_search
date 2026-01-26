@@ -1,0 +1,7 @@
+
+cd "$(dirname "$0")"
+PROJECT_PATH="$PWD"
+pwd
+rm -rf Logs/build.log
+/Applications/Unity/Hub/Editor/6000.0.57f1/Unity.app/Contents/MacOS/Unity -quit -batchmode -buildTarget Android -projectPath "$PROJECT_PATH" -executeMethod SharedEditor.Editor.GameBuilder.PerformFirebaseAppDistributionApk -logFile Logs/build.log
+exit 0

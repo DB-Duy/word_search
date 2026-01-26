@@ -1,0 +1,49 @@
+{
+  "FACEBOOK_SDK": {
+    "ImportFolders": "Assets/FacebookSDK",
+    "CleanFolders": "Assets/ExternalDependencyManager;Assets/FacebookSDK/Examples"
+  },
+  "APPS_FLYER": {
+    "ImportFolders": "Assets/AppsFlyer",
+    "CleanFolders": "Assets/ExternalDependencyManager"
+  },
+  "ADJUST": {
+    "ImportFolders": "Assets/Adjust",
+    "CleanFolders": "Assets/Adjust/Example"
+  },
+  "LEVEL_PLAY": {
+    "ImportFolders": "Assets/LevelPlay"
+  },
+  "AD_QUALITY": {
+    "ImportFolders": "Assets/IronSourceAdQuality",
+    "CleanFolders": "Assets/ExternalDependencyManager"
+  },
+  "USING_UMP": {
+    "ImportFolders": "Assets/GoogleMobileAds",
+    "CleanFolders": "Assets/ExternalDependencyManager"
+  },
+  "APS": {
+    "ImportFolders": "Assets/Amazon",
+    "CleanFolders": "Assets/Amazon/Scripts/Editor/AmazonDependencies.xml"
+  },
+  "ODEEO_AUDIO": {
+    "ImportFolders": "Assets/Odeeo",
+    "CleanFolders": "Assets/ExternalDependencyManager;Assets/Odeeo/Demo"
+  },
+  "GADSME_AUDIO": {
+    "ImportFolders": "Assets/Gadsme",
+    "CleanFolders": "Assets/ExternalDependencyManager"
+  },
+  "AUDIO_MOB": {
+    "ImportFolders": "Assets/Plugins/AudioMob",
+    "CleanFolders": "Assets/Plugins/AudioMob/Examples"
+  },
+  "ADVERTY": {
+    "ImportFolders": "Assets/Adverty5",
+    "CleanFolders": "Assets/Adverty5/Example"
+  },
+  "MOREMOUNTAINS_NICEVIBRATIONS_INSTALLED": {
+    "ImportFolders": "Assets/Feel/NiceVibrations"
+  }
+  
+}

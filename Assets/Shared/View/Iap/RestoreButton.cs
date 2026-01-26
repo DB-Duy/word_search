@@ -1,0 +1,31 @@
+#if IAP
+
+using Shared.Core.IoC;
+using Shared.Service.Iap;
+using UnityEngine;
+using UnityEngine.UI;
+using Zenject;
+
+namespace Shared.View.Iap
+{
+    [RequireComponent(typeof(Button))]
+    public class RestoreButton : IoCMonoBehavior
+    {
+        [Inject] private IIapService _iapService;
+        
+        /// <summary>
+        /// It can be id or productId
+        /// </summary>
+        [SerializeField] private string productId;
+
+        private void Start()
+        {
+            GetComponent<Button>().onClick.AddListener(() =>
+            {
+                _iapService.RestorePurchases();
+            });
+        }
+    }
+}
+
+#endif

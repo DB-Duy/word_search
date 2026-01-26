@@ -1,0 +1,62 @@
+{
+  "Shared.Repository.Ump.UmpConfigRepository": {
+    "name": "ConsentConfig",
+    "default_value": "{\"enable_consent_android\":true,\"enable_consent_iOS\":true}"
+  },
+  "Shared.Repository.StoreRating.StoreRatingConfigRepository": {
+    "name": "FakeRatingPopup",
+    "default_value": "{ \"show_popup\": 1, \"show_after_level\": 10 }"
+  },
+  "Shared.Repository.SharedBright.BrightSdkConfigRepository": {
+    "name": "BrightSdkConfigRepository",
+    "default_value": ""
+  },
+  "Shared.Repository.S2S.S2SConfigRepository": {
+    "name": "IapVerificationConfig",
+    "default_value": "{\"unlocked\":true,\"remote_url\":\"https://s2s.indiez.net/app/iap/google-play/verify\",\"api_key\":\"aeee2cea-5b1b-452d-84e5-bb984341596e\"}"
+  },
+  "Shared.Repository.Premium.PremiumConfigRepository": {
+    "name": "PremiumConfigRepository",
+    "default_value": ""
+  },
+  "Shared.Repository.ParentControl.ParentControlConfigRepository": {
+    "name": "ParentControlConfigRepository",
+    "default_value": ""
+  },
+  "Shared.Repository.Mmp.MmpConfigRepository": {
+    "name": "EventsForMMP",
+    "default_value": "[]"
+  },
+  "Shared.Repository.InPlayAds.InPlayAdsConfigRepository": {
+    "name": "InplayAdsConfig",
+    "default_value": "{\"unlocked\":true,\"placements\":{\"game_play\":[\"GadsmeCanvasLeaderboard728x90\",\"GadsmeCanvasMobileLeaderboard320x50\",\"AdvertyInMenuUnitLandscape\",\"AdvertyInMenuUnitWideLandscape\"],\"game_win\":[\"GadsmeCanvasVideo4x3\",\"GadsmeCanvasVideo16x9\",\"GadsmeCanvasMediumRectangle300x250\",\"GadsmeCanvasBillboard970x250\",\"GadsmeCanvasLeaderboard728x90\",\"GadsmeCanvasMobileLeaderboard320x50\",\"GadsmeCanvasBannerSquare320x320\",\"AdvertyInMenuUnitBox\",\"AdvertyInMenuUnitLandscape\",\"AdvertyInMenuUnitWideLandscape\"]}}"
+  },
+  "Shared.Repository.InAppUpdate.InAppUpdateConfigRepository": {
+    "name": "InAppUpdateConfig",
+    "default_value": "{\"unlocked\":true,\"minVersionCode\": 240513156}"
+  },
+  "Shared.Repository.AudioAds.AudioAdsConfigRepository": {
+    "name": "AudioAdsConfigRepository",
+    "default_value": ""
+  },
+  "Shared.Repository.Ads.AdsBreakConfigRepository": {
+    "name": "AdsBreakConfigRepository",
+    "default_value": ""
+  },
+  "Shared.Repository.Ads.InterstitialConfigRepository": {
+    "name": "InterstitialConfigRepository",
+    "default_value": ""
+  },
+  "Shared.Repository.Ads.MultipleBannerAdsConfigRepository": {
+    "name": "MultipleBannerAdsConfig",
+    "default_value": "{\"unlocked\":false}"
+  },
+  "Shared.Repository.Ads.MultipleInterstitialAdsConfigRepository": {
+    "name": "MultipleInterstitialAdsConfig",
+    "default_value": "{\"unlocked\":false}"
+  },
+  "Shared.Repository.Ads.MultipleRewardedAdsConfigRepository": {
+    "name": "MultipleRewardedAdsConfig",
+    "default_value": "{\"unlocked\":false}"
+  }
+}
