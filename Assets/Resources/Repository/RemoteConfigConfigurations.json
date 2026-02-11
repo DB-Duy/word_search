@@ -11,6 +11,10 @@
     "name": "BrightSdkConfigRepository",
     "default_value": ""
   },
+  "Shared.Repository.Session.SessionConfigRepository": {
+    "name": "SessionConfigRepository",
+    "default_value": "{}"
+  },
   "Shared.Repository.S2S.S2SConfigRepository": {
     "name": "IapVerificationConfig",
     "default_value": "{\"unlocked\":true,\"remote_url\":\"https://s2s.indiez.net/app/iap/google-play/verify\",\"api_key\":\"aeee2cea-5b1b-452d-84e5-bb984341596e\"}"

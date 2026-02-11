@@ -1,0 +1,157 @@
+﻿{
+  "bundle_id": {
+    "id": "bundle_id",
+    "android": "com.word.search",
+    "ios": "com.word.search"
+  },
+  "privacy_url": {
+    "id": "privacy_url",
+    "android": "https://indiez.net/privacy",
+    "ios": "https://indiez.net/privacy",
+    "huawei": "https://indiez.net/privacy"
+  },
+  "tos_url": {
+    "id": "tos_url",
+    "android": "https://indiez.net/tos",
+    "ios": "https://indiez.net/tos"
+  },
+  "store_url": {
+    "id": "store_url"
+  },
+  "appstore_id": {
+    "id": "appstore_id"
+  },
+  "is_app_key": {
+    "id": "is_app_key"
+  },
+  "is_banner_id": {
+    "id": "is_banner_id"
+  },
+  "is_interstitial_id": {
+    "id": "is_interstitial_id"
+  },
+  "is_rewarded_id": {
+    "id": "is_rewarded_id"
+  },
+  "is_mrec_id": {
+    "id": "is_mrec_id"
+  },
+  "topon_app_key": {
+    "id": "topon_app_key"
+  },
+  "topon_app_id": {
+    "id": "topon_app_id"
+  },
+  "topon_rewarded_id": {
+    "id": "topon_rewarded_id"
+  },
+  "topon_interstitial_id": {
+    "id": "topon_interstitial_id"
+  },
+  "topon_banner_id": {
+    "id": "topon_banner_id"
+  },
+  "admob_app_id": {
+    "id": "admob_app_id"
+  },
+  "aps_app_id": {
+    "id": "aps_app_id"
+  },
+  "aps_banner_728x90": {
+    "id": "aps_banner_728x90"
+  },
+  "aps_banner_320x50": {
+    "id": "aps_banner_320x50"
+  },
+  "aps_interstitial_video": {
+    "id": "aps_interstitial_video"
+  },
+  "aps_interstitial_image": {
+    "id": "aps_interstitial_image"
+  },
+  "aps_rewarded_video": {
+    "id": "aps_rewarded_video"
+  },
+  "aps_mrec_300x250": {
+    "id": "aps_mrec_300x250"
+  },
+  "adverty_api_key": {
+    "id": "adverty_api_key"
+  },
+  "adverty5_api_key": {
+    "id": "adverty5_api_key"
+  },
+  "adjust_app_token": {
+    "id": "adjust_app_token"
+  },
+  "adjust_revenue_event_token": {
+    "id": "adjust_revenue_event_token"
+  },
+  "iap_base64_rsa_public_key": {
+    "id": "iap_base64_rsa_public_key"
+  },
+  "odeeo_api_key": {
+    "id": "odeeo_api_key"
+  },
+  "odeeo_app_key": {
+    "id": "odeeo_app_key"
+  },
+  "odeeo_icon_id": {
+    "id": "odeeo_icon_id"
+  },
+  "odeeo_rewarded_icon_id": {
+    "id": "odeeo_rewarded_icon_id"
+  },
+  "facebook_id": {
+    "id": "facebook_id",
+    "android": "719462284196595",
+    "ios": "719462284196595"
+  },
+  "facebook_client_token": {
+    "id": "facebook_client_token",
+    "android": "b89eb1a081fbe035a250ecb151a8cfb0",
+    "ios": "b89eb1a081fbe035a250ecb151a8cfb0"
+  },
+  "facebook_rewarded_id": {
+    "id": "facebook_rewarded_id"
+  },
+  "facebook_interstitial_id": {
+    "id": "facebook_interstitial_id"
+  },
+  "facebook_banner_id": {
+    "id": "facebook_banner_id"
+  },
+  "audiomob_id": {
+    "id": "audiomob_id"
+  },
+  "gadsme_id": {
+    "id": "gadsme_id"
+  },
+  "appmetrica_id": {
+    "id": "appmetrica_id",
+    "android": "faaaeb37-c069-4d88-b895-5871fb2b4901",
+    "ios": "faaaeb37-c069-4d88-b895-5871fb2b4901"
+  },
+  "maticoo_app_key": {
+    "id": "maticoo_app_key"
+  },
+  "s2s_iap_verify_enable": {
+    "id": "s2s_iap_verify_enable"
+  },
+  "s2s_iap_verify_url": {
+    "id": "s2s_iap_verify_url"
+  },
+  "s2s_iap_verify_key": {
+    "id": "s2s_iap_verify_key"
+  },
+  "tracking_event_static_property_names": {
+    "id": "tracking_event_static_property_names",
+    "android": "session_id,level,map,mode_game,start_count",
+    "ios": "session_id,level,map,mode_game,start_count"
+  },
+  "appsflyer_dev_key": {
+    "id": "appsflyer_dev_key",
+    "android": "QuJ6jfG63fa8Gh8W5oCRYK",
+    "ios": "QuJ6jfG63fa8Gh8W5oCRYK"
+  }
+}

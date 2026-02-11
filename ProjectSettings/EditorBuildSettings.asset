@@ -2,10 +2,12 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1045 &1
 EditorBuildSettings:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
+  serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/GameBase/Scenes/Root.unity
     guid: 165c2c38d2e37ae49999bb675a935195
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 1e74281fe0344064f9eaf85ec494c2da, type: 2}
+  m_UseUCBPForAssetBundles: 0
