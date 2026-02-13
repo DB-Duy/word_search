@@ -40,10 +40,7 @@ namespace View.Puzzle
             _puzzleView = puzzleView;
             _selectedWordView = selectedWordView;
             _targetWordsView = targetWordsView;
-            OnPlayAnimCompleted = () =>
-            {
-                _selectedWordView.SetWord(null);
-            };
+            OnPlayAnimCompleted = () => { _selectedWordView.SetWord(null); };
             _selectedIndices = new List<int>();
         }
 
@@ -66,6 +63,7 @@ namespace View.Puzzle
 
         private void OnPointerDown(PuzzleTouchData data)
         {
+            if (_puzzleView.IsRotating) return;
             _isSelecting = false;
             _startIndex = -1;
 
@@ -98,23 +96,26 @@ namespace View.Puzzle
             _isSelecting = false;
             _startIndex = -1;
 
-            bool isValid = _puzzleView.ValidateWord(_sb.ToString(), GetReversedString(), out var foundWord, out var isReversed);
-            this.LogInfo("OnPointerUp:", "isValid =", isValid, "word = ", _sb.ToString(), "selectedIndices =", _selectedIndices.ToArray(),
+            bool isValid = _puzzleView.ValidateWord(_sb.ToString(), GetReversedString(), out var foundWord,
+                out var isReversed);
+            this.LogInfo("OnPointerUp:", "isValid =", isValid, "word = ", _sb.ToString(), "selectedIndices =",
+                _selectedIndices.ToArray(),
                 "foundWord =", foundWord?.Word);
 
             if (isValid)
             {
                 _completedIndices.AddRange(_selectedIndices);
                 _puzzleView.AddFoundWord(foundWord);
-                _targetWordsView.PlayAnimWordCompleted(_selectedIndices, foundWord.Word, isReversed, OnPlayAnimCompleted);
+                _targetWordsView.PlayAnimWordCompleted(_selectedIndices, foundWord.Word, isReversed,
+                    OnPlayAnimCompleted);
             }
             else
             {
-                _selectedIndices.Clear();
                 _selectedWordView.PlayIncorrectAnimation();
             }
 
-            _selectionLineHandler.FinalizeLine(isValid);
+            _selectionLineHandler.FinalizeLine(isValid, foundWord);
+            _selectedIndices.Clear();
 
             SyncHighlights();
         }
@@ -163,7 +164,7 @@ namespace View.Puzzle
             {
                 var cell = cells[i];
                 bool shouldBeHighlighted =
-                    _selectedIndices.Contains(cell.Index) || _completedIndices.Contains(cell.Index);
+                    _selectedIndices.Contains(cell.Index);
                 cell.SetHighlighted(shouldBeHighlighted);
             }
         }

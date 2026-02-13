@@ -13,9 +13,15 @@ namespace View.Gameplay
         [SerializeField] private PuzzleView _puzzleView;
         [Inject] private PuzzleService _puzzleService;
 
+        protected override void Awake()
+        {
+            base.Awake();
+            Input.multiTouchEnabled = false;
+        }
+
         private void Start()
         {
-            _puzzleView.SetupPuzzle(_puzzleService.GetPuzzleById(4));
+            _puzzleView.SetupPuzzle(_puzzleService.GetPuzzleById(44));
         }
         
     }

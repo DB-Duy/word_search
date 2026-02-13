@@ -1,22 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using PrimeTween;
 using Service.Puzzle;
+using Shared;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Pool;
 
 namespace View.Puzzle
 {
-    public class TargetWordsView : MonoBehaviour
+    public class TargetWordsView : MonoBehaviour, ISharedUtility
     {
-        [SerializeField] private TextMeshProUGUI _targetWordsText;
-        private static StringBuilder _sb = new StringBuilder();
-        private List<string> _targetWords = new List<string>();
-        private const string CompletedWordFormat = "<color=#ABABAB>{0}</color>";
+        [SerializeField] private RectTransform[] _wordsParentLines;
+        [SerializeField] private RectTransform _lettersParent;
+        private List<TargetWord> _targetWords => _puzzleView.TargetWords;
+        private const string CompletedWordFormat = "<color=#727272>{0}</color>";
         [SerializeField] private TextMeshProUGUI _letterPrefab;
+        [SerializeField] private TargetWordUI _targetWordUIPrefab;
         private ObjectPool<TextMeshProUGUI> _letterPool;
+        private ObjectPool<TargetWordUI> _targetWordUIPool;
         private List<TextMeshProUGUI> _activeLetterAnims = new List<TextMeshProUGUI>();
+        private List<TargetWordUI> _activeTargetWordUIs = new List<TargetWordUI>();
         private PuzzleBuilder _puzzleBuilder;
         private PuzzleView _puzzleView;
 
@@ -27,7 +31,7 @@ namespace View.Puzzle
             _puzzleBuilder = puzzleBuilder;
             _puzzleView = puzzleView;
             _letterPool = new ObjectPool<TextMeshProUGUI>(
-                createFunc: () => Instantiate(_letterPrefab, _targetWordsText.transform),
+                createFunc: () => Instantiate(_letterPrefab, _lettersParent),
                 actionOnGet: letter => letter.gameObject.SetActive(true),
                 actionOnRelease: letter => letter.gameObject.SetActive(false),
                 actionOnDestroy: letter => Destroy(letter.gameObject),
@@ -35,73 +39,44 @@ namespace View.Puzzle
                 defaultCapacity: 10,
                 maxSize: 100
             );
+            _targetWordUIPool = new ObjectPool<TargetWordUI>(
+                createFunc: () => Instantiate(_targetWordUIPrefab, _wordsParentLines[0]),
+                actionOnGet: ui => ui.gameObject.SetActive(true),
+                actionOnRelease: ui => ui.gameObject.SetActive(false),
+                actionOnDestroy: ui => Destroy(ui.gameObject),
+                collectionCheck: false,
+                defaultCapacity: 10,
+                maxSize: 100
+            );
         }
 
-        public void SetTargetWords(List<TargetWord> targetWords)
-        {
-            if (targetWords == null || targetWords.Count == 0)
-            {
-                return;
-            }
-
-            _sb.Clear();
-            _sb.Append(targetWords[0].Word);
-            _targetWords.Clear();
-            _targetWords.Add(targetWords[0].Word);
-
-            for (int i = 1; i < targetWords.Count; i++)
-            {
-                var targetWord = targetWords[i];
-                _targetWords.Add(targetWord.Word);
-                _sb.Append(" ").Append(targetWord.Word);
-            }
-
-            _targetWordsText.SetText(_sb);
-            _targetWordsText.ForceMeshUpdate();
-        }
-
-        private void SyncWordsVisual()
+        public void SyncWordsVisual()
         {
             var foundWords = _puzzleView.FoundTargetWordIndices;
-            _sb.Clear();
+
+            foreach (var word in _activeTargetWordUIs)
+            {
+                _targetWordUIPool.Release(word);
+            }
+
+            _activeTargetWordUIs.Clear();
 
             for (int i = 0; i < _targetWords.Count; i++)
             {
-                if (foundWords.Contains(i))
-                {
-                    _sb.AppendFormat(CompletedWordFormat, _targetWords[i]);
-                }
-                else
-                {
-                    _sb.Append(_targetWords[i]);
-                }
-
-                if (i < _targetWords.Count - 1)
-                {
-                    _sb.Append(" ");
-                }
+                var targetWordUI = _targetWordUIPool.Get();
+                _activeTargetWordUIs.Add(targetWordUI);
+                var text = foundWords.Contains(i)
+                    ? string.Format(CompletedWordFormat, _targetWords[i].Word)
+                    : _targetWords[i].Word;
+                targetWordUI.SetText(text);
             }
-
-            _targetWordsText.SetText(_sb);
-            _targetWordsText.ForceMeshUpdate();
         }
+
 
         private void InvokeOnCompleted()
         {
             _onCompleted?.Invoke();
             _onCompleted = null;
-        }
-
-        private int GetWordStartCharIndex(int wordListIndex)
-        {
-            // Words are displayed as: word0 + (space + word1) + ...
-            var start = 0;
-            for (int i = 0; i < wordListIndex; i++)
-            {
-                start += _targetWords[i].Length + 1; // +1 for the space delimiter
-            }
-
-            return start;
         }
 
         private void ReleaseActiveLetterAnims()
@@ -117,21 +92,19 @@ namespace View.Puzzle
         public void PlayAnimWordCompleted(List<int> cellIndices, string word, bool isReversed, Action onComplete = null)
         {
             _onCompleted = onComplete;
-
-            _targetWordsText.ForceMeshUpdate();
-
             var wordListIndex = -1;
             for (int i = 0; i < _targetWords.Count; i++)
             {
-                if (string.Equals(_targetWords[i], word, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(_targetWords[i].Word, word, StringComparison.OrdinalIgnoreCase))
                 {
                     wordListIndex = i;
                     break;
                 }
             }
 
-            var wordStartIndex = GetWordStartCharIndex(wordListIndex);
-            var charInfo = _targetWordsText.textInfo.characterInfo;
+            var targetWordUI = _activeTargetWordUIs[wordListIndex];
+
+            var charInfo = targetWordUI.TextInfo.characterInfo;
             var cells = _puzzleBuilder.Cells;
 
             for (int i = 0; i < cellIndices.Count; i++)
@@ -144,15 +117,15 @@ namespace View.Puzzle
                 letter.transform.position = cell.transform.position;
                 letter.fontSize = cell.FontSize;
 
-                var targetCharInfo = charInfo[wordStartIndex + i];
-                var targetPos = _targetWordsText.transform.TransformPoint(
+                var targetCharInfo = charInfo[i];
+                var targetPos = targetWordUI.transform.TransformPoint(
                     (targetCharInfo.bottomLeft + targetCharInfo.topRight) * 0.5f
                 );
                 _activeLetterAnims.Add(letter);
-                PrimeTween.Tween.Position(letter.transform, targetPos, 0.6f);
+                Tween.Position(letter.transform, targetPos, 0.6f, Ease.OutSine);
             }
 
-            PrimeTween.Tween.Delay(0.61f).OnComplete(this, x =>
+            Tween.Delay(0.61f).OnComplete(this, x =>
             {
                 x.ReleaseActiveLetterAnims();
                 x.SyncWordsVisual();

@@ -11,14 +11,37 @@ namespace View.Puzzle
         [SerializeField] private Image _endCapImage;
         private static Color transparentColor = new Color(0, 0, 0, 0);
         private Sequence _colorTween;
+        public Color Color { get; private set; }
 
-        private void OnEnable()
+        public float Size;
+
+
+#if UNITY_EDITOR
+        private void Update()
         {
-            _lineImage.color = transparentColor;
+            _lineImage.rectTransform.sizeDelta = new Vector2(_lineImage.rectTransform.sizeDelta.x, Size);
+            _startCapImage.rectTransform.sizeDelta = new Vector2(Size, Size);
+            _endCapImage.rectTransform.sizeDelta = new Vector2(Size, Size);
+        }
+
+#endif
+        public void PlayLineComplete()
+        {
+            Vector3 punch = new Vector3(0.3f, 0.3f, 0.3f);
+            float duration = 0.3f;
+            Tween.PunchScale(transform, punch, duration);
+        }
+
+        private void Start()
+        {
+            _lineImage.rectTransform.sizeDelta = new Vector2(_lineImage.rectTransform.sizeDelta.x, Size);
+            _startCapImage.rectTransform.sizeDelta = new Vector2(Size, Size);
+            _endCapImage.rectTransform.sizeDelta = new Vector2(Size, Size);
         }
 
         public void SetColor(Color color, bool immediate = true)
         {
+            Color = color;
             if (immediate)
             {
                 _lineImage.color = color;
@@ -41,6 +64,15 @@ namespace View.Puzzle
             }
         }
 
+        private Vector3[] _worldCorners = new Vector3[4];
+
+        public void SetSurround(RectTransform rectTransform)
+        {
+            rectTransform.GetWorldCorners(_worldCorners);
+            SetStartCap((_worldCorners[0] + _worldCorners[1]) * 0.5f);
+            SetEndCap((_worldCorners[2] + _worldCorners[3]) * 0.5f);
+        }
+
         public void SetStartCap(Vector3 position)
         {
             _startCapImage.transform.position = position;
@@ -59,6 +91,23 @@ namespace View.Puzzle
             rt.right = position - startPos;
             _lineImage.gameObject.SetActive(true);
             SetLineImageWidth();
+            SyncRootTransform();
+        }
+
+        private void SyncRootTransform()
+        {
+            var lineT = _lineImage.transform;
+            var startT = _startCapImage.transform;
+            var endT = _endCapImage.transform;
+            var linePos = lineT.position;
+            var lineRot = lineT.rotation;
+            var startPos = startT.position;
+            var endPos = endT.position;
+            
+            transform.SetPositionAndRotation((startPos + endPos) * 0.5f, lineRot);
+            startT.position = startPos;
+            endT.position = endPos;
+            _lineImage.transform.SetPositionAndRotation(linePos, lineRot);
         }
 
         private void SetLineImageWidth()

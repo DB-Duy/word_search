@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.coffee.ui-particle": "https://github.com/mob-sakai/ParticleEffectForUGUI.git",
     "com.google.external-dependency-manager": "file:../Tarballs/com.google.external-dependency-manager-1.2.186.tgz",
     "com.kyrylokuzyk.primetween": "file:../Assets/Plugins/PrimeTween/internal/com.kyrylokuzyk.primetween.tgz",
     "com.shared.editor.tool": "file:../Tarballs/com.shared.editor.tool-1.5.0.tgz",

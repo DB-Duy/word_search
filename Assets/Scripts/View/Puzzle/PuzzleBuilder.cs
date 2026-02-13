@@ -82,11 +82,23 @@ namespace View.Puzzle
             IEnumerator DelayScaleCells()
             {
                 yield return new WaitForEndOfFrame();
-                var parentRect = ((RectTransform)_gridLayoutGroup.transform).rect;
-                float cellWidth = parentRect.width / _level.Cols - _gridLayoutGroup.spacing.x;
-                float cellHeight = parentRect.height / _level.Rows - _gridLayoutGroup.spacing.y;
-                float cellSize = Mathf.Min(cellWidth, cellHeight);
-                _gridLayoutGroup.cellSize = new Vector2(cellSize, cellSize);
+
+                var rectTransform = (RectTransform)_gridLayoutGroup.transform;
+                var parentRect = rectTransform.rect;
+
+                int cols = Mathf.Max(1, _level.Cols);
+                int rows = Mathf.Max(1, _level.Rows);
+
+                float totalSpacingX = _gridLayoutGroup.spacing.x * Mathf.Max(0, cols - 1);
+                float totalSpacingY = _gridLayoutGroup.spacing.y * Mathf.Max(0, rows - 1);
+
+                float availableWidth = parentRect.width - totalSpacingX;
+                float availableHeight = parentRect.height - totalSpacingY;
+
+                float cellWidth = availableWidth / cols;
+                float cellHeight = availableHeight / rows;
+
+                _gridLayoutGroup.cellSize = new Vector2(cellWidth, cellHeight);
             }
         }
 
