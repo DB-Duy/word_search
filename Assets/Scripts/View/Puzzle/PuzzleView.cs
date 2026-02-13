@@ -236,7 +236,7 @@ namespace View.Puzzle
             _targetWords.AddRange(level.TargetWords);
             _selectionLineHandler.RefreshColors();
             _selectedWordView.Init(_selectionLineHandler);
-            _targetWordsView.SyncWordsVisual();
+            _targetWordsView.SpawnWords();
         }
 
         public void AddFoundWord(TargetWord foundWord)

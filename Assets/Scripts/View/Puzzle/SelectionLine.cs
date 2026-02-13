@@ -1,6 +1,9 @@
-﻿using PrimeTween;
+﻿using DG.Tweening;
+using PrimeTween;
 using UnityEngine;
 using UnityEngine.UI;
+using Sequence = PrimeTween.Sequence;
+using Tween = PrimeTween.Tween;
 
 namespace View.Puzzle
 {
@@ -27,9 +30,11 @@ namespace View.Puzzle
 #endif
         public void PlayLineComplete()
         {
-            Vector3 punch = new Vector3(0.3f, 0.3f, 0.3f);
-            float duration = 0.3f;
-            Tween.PunchScale(transform, punch, duration);
+            Vector3 punch = new Vector3(1.1f, 1.1f, 1.1f);
+            float duration = 0.1f;
+            PrimeTween.Sequence.Create()
+                .Group(Tween.Scale(transform, punch, duration, PrimeTween.Ease.InBack))
+                .Chain(Tween.Scale(transform, Vector3.one, duration, PrimeTween.Ease.InQuad));
         }
 
         private void Start()
@@ -103,7 +108,7 @@ namespace View.Puzzle
             var lineRot = lineT.rotation;
             var startPos = startT.position;
             var endPos = endT.position;
-            
+
             transform.SetPositionAndRotation((startPos + endPos) * 0.5f, lineRot);
             startT.position = startPos;
             endT.position = endPos;

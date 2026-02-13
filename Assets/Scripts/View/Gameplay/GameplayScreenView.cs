@@ -21,7 +21,7 @@ namespace View.Gameplay
 
         private void Start()
         {
-            _puzzleView.SetupPuzzle(_puzzleService.GetPuzzleById(44));
+            _puzzleView.SetupPuzzle(_puzzleService.GetPuzzleById(18));
         }
         
     }
