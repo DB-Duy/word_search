@@ -1,4 +1,3 @@
-
 using System.Collections;
 using Service.Puzzle;
 using Service.UserData;
@@ -32,13 +31,23 @@ namespace Service.Gameplay
             {
                 yield return null;
             }
-            
+
             UIScene.Instance.ShowScreen<GameplayScreenView>();
         }
 
         private bool GameServicesReady()
         {
             return _userDataService.IsInitialized && _puzzleService.IsInitialized;
+        }
+
+        public void LevelCompleted()
+        {
+            _userDataService.IncrementLevel();
+            _puzzleService.ClearPuzzleSaveData();
+            if (UIScene.Instance.GetCurrentScreen() is GameplayScreenView gameplayScreen)
+            {
+                gameplayScreen.NextLevelSequence();
+            }
         }
     }
 }

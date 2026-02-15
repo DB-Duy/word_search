@@ -11,11 +11,19 @@ namespace Service.UserData
         private const string Tag = "UserDataService";
         
         [Inject] private UserDataRepository _userDataRepository;
+        public int DisplayLevel => _userDataRepository.Get().Level + 1;
         public bool IsInitialized;
 
         public void Initialize()
         {
             IsInitialized = true; 
+        }
+        
+        public void IncrementLevel()
+        {
+            var data = _userDataRepository.Get();
+            data.Level++;
+            _userDataRepository.Save(data);
         }
     }
 }

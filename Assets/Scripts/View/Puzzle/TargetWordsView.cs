@@ -9,6 +9,7 @@ using Shared.Service.SharedCoroutine;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Pool;
+using Random = UnityEngine.Random;
 
 namespace View.Puzzle
 {
@@ -19,6 +20,7 @@ namespace View.Puzzle
         [SerializeField] private TextMeshProUGUI _letterPrefab;
         [SerializeField] private TargetWordUI _targetWordUIPrefab;
         [SerializeField] private TextMeshProUGUI _text;
+        [SerializeField] private CompletedEffectsView _completedEffectsView;
         private StringBuilder _sb = new StringBuilder();
         private ObjectPool<TextMeshProUGUI> _letterPool;
         private ObjectPool<TargetWordUI> _targetWordUIPool;
@@ -26,8 +28,10 @@ namespace View.Puzzle
         private List<TargetWordUI> _activeTargetWordUIs = new List<TargetWordUI>();
         private PuzzleBuilder _puzzleBuilder;
         private PuzzleView _puzzleView;
-
+        private int _lastCompletedWordIndex = -1;
         private Action _onCompleted;
+
+        public static bool LettersAnimPlaying = false;
 
         public void Init(PuzzleBuilder puzzleBuilder, PuzzleView puzzleView)
         {
@@ -103,6 +107,7 @@ namespace View.Puzzle
                         0.5f
                     );
                     targetWordUI.FontSize = _text.fontSize;
+                    targetWordUI.SetCompleted(false);
                 }
             }
         }
@@ -124,6 +129,7 @@ namespace View.Puzzle
         {
             _onCompleted?.Invoke();
             _onCompleted = null;
+            LettersAnimPlaying = false;
         }
 
         private void ReleaseActiveLetterAnims()
@@ -136,11 +142,17 @@ namespace View.Puzzle
             _activeLetterAnims.Clear();
         }
 
+        private void TryPlayCompletedEffect()
+        {
+            _completedEffectsView.TryPlayCompletedEffects(_activeTargetWordUIs[_lastCompletedWordIndex].transform.position);
+        }
+
         private Tween _callbackTween;
 
         public void PlayAnimWordCompleted(List<int> cellIndices, string word, bool isReversed, Action onComplete = null)
         {
             _onCompleted = onComplete;
+            LettersAnimPlaying = true;
             var wordListIndex = -1;
             for (int i = 0; i < _targetWords.Count; i++)
             {
@@ -152,6 +164,7 @@ namespace View.Puzzle
             }
 
             var targetWordUI = _activeTargetWordUIs[wordListIndex];
+            _lastCompletedWordIndex = wordListIndex;
 
             var charInfo = targetWordUI.TextInfo.characterInfo;
             var cells = _puzzleBuilder.Cells;
@@ -185,6 +198,7 @@ namespace View.Puzzle
                 x.ReleaseActiveLetterAnims();
                 x.SyncWordsCompleted();
                 x.InvokeOnCompleted();
+                x.TryPlayCompletedEffect();
             });
         }
     }

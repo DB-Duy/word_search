@@ -14,7 +14,6 @@ namespace View.Puzzle
     {
         private GamePuzzle _level;
         private readonly List<int> _selectedIndices;
-        private readonly List<int> _completedIndices = new List<int>();
         private readonly List<int> _tempIndices = new List<int>();
         private readonly PuzzleBuilder _builder;
         private bool _isSelecting = false;
@@ -28,6 +27,7 @@ namespace View.Puzzle
         private static StringBuilder _sb = new();
 
         private int _startIndex = -1;
+        private int _currentCellIndex = -1;
         private Action OnPlayAnimCompleted;
 
         public CellSelector(PuzzleBuilder builder, PuzzleService puzzleService, PuzzleView puzzleView,
@@ -40,7 +40,10 @@ namespace View.Puzzle
             _puzzleView = puzzleView;
             _selectedWordView = selectedWordView;
             _targetWordsView = targetWordsView;
-            OnPlayAnimCompleted = () => { _selectedWordView.SetWord(null); };
+            OnPlayAnimCompleted = () =>
+            {
+                _selectedWordView.SetWord(null);
+            };
             _selectedIndices = new List<int>();
         }
 
@@ -87,6 +90,7 @@ namespace View.Puzzle
             if (!TryGetClosestReachableEndFromStart(_startIndex, local, out int endIdx))
                 return;
 
+            _currentCellIndex = endIdx;
             if (TryBuildLineFromStartToHover(_startIndex, endIdx, out var line))
                 ReplaceSelection(line);
         }
@@ -104,19 +108,24 @@ namespace View.Puzzle
 
             if (isValid)
             {
-                _completedIndices.AddRange(_selectedIndices);
+                _selectionLineHandler.CompleteActiveLine();
                 _puzzleView.AddFoundWord(foundWord);
                 _targetWordsView.PlayAnimWordCompleted(_selectedIndices, foundWord.Word, isReversed,
                     OnPlayAnimCompleted);
+                foreach (var idx in _selectedIndices)
+                {
+                    var cell = _builder.GetCellAtIndex(idx);
+                    cell.PlayCompletedAnim();
+                }
             }
             else
             {
                 _selectedWordView.PlayIncorrectAnimation();
+                _selectionLineHandler.EraseLine();
             }
 
-            _selectionLineHandler.FinalizeLine(isValid, foundWord);
             _selectedIndices.Clear();
-
+            _currentCellIndex = -1;
             SyncHighlights();
         }
 
@@ -166,6 +175,7 @@ namespace View.Puzzle
                 bool shouldBeHighlighted =
                     _selectedIndices.Contains(cell.Index);
                 cell.SetHighlighted(shouldBeHighlighted);
+                cell.SetSelected(i == _currentCellIndex);
             }
         }
 
@@ -426,9 +436,19 @@ namespace View.Puzzle
             return new Vector2(x, y);
         }
 
+        private List<int> _lineCache = new List<int>();
+
         private bool TryBuildLineFromStartToHover(int startIdx, int endIdx, out List<int> line)
         {
             line = null;
+            if (startIdx == endIdx)
+            {
+                _lineCache.Clear();
+                _lineCache.Add(startIdx);
+                line = _lineCache;
+                return true;
+            }
+
             if (_level == null)
                 return false;
 
@@ -464,7 +484,8 @@ namespace View.Puzzle
 
             int steps = Math.Max(Math.Abs(deltaR), Math.Abs(deltaC));
 
-            var result = new List<int>(steps + 1);
+            _lineCache.Clear();
+            var result = _lineCache;
             int r = sr;
             int c = sc;
             for (int i = 0; i <= steps; i++)

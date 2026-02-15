@@ -31,10 +31,12 @@ namespace View.Puzzle
         };
 
         private List<SelectionLine> _lines = new List<SelectionLine>();
+        public List<SelectionLine> Lines => _lines;
         private SelectionLine _activeLine;
         private PuzzleCell _lineStartCell;
         private HashSet<Color> _availableColors = new HashSet<Color>();
-        private Dictionary<TargetWord, Color> _wordColors = new();
+        private List<int> _wordColorsIndex = new();
+        public List<int> WordColorsIndex => _wordColorsIndex;
 
         // Tune this to land on the text nicely (in the same UI units as your cells).
         private const float StartTextOffset = 12f;
@@ -44,6 +46,18 @@ namespace View.Puzzle
             _linePool = linePool;
         }
 
+        public void OnNewPuzzle()
+        {
+            RefreshColors();
+            foreach (var line in _lines)
+            {
+                _linePool.Release(line);
+            }
+
+            _lines.Clear();
+            _wordColorsIndex.Clear();
+        }
+
         public void RefreshColors()
         {
             _availableColors.Clear();
@@ -51,6 +65,11 @@ namespace View.Puzzle
             {
                 _availableColors.Add(color);
             }
+        }
+
+        public int GetColorIndex(Color c)
+        {
+            return _lineColors.IndexOf(c);
         }
 
         private Color GetRandomColor()
@@ -97,24 +116,38 @@ namespace View.Puzzle
             return _activeLine != null ? _activeLine.Color : Color.clear;
         }
 
-        public void FinalizeLine(bool isValid, TargetWord word)
+        public void SetCompletedLine(PuzzleCell start, PuzzleCell end, int colorIdx)
+        {
+            var line = _linePool.Get();
+            line.SetColor(_lineColors[colorIdx]);
+            line.SetStartCap(start.transform.position);
+            line.SetEndCap(end.transform.position);
+            _lines.Add(line);
+            _wordColorsIndex.Add(colorIdx);
+            _availableColors.Remove(_lineColors[colorIdx]);
+        }
+
+        public void CompleteActiveLine()
         {
             if (_activeLine == null) return;
-            if (isValid)
-            {
-                _lines.Add(_activeLine);
-                _wordColors[word] = _activeLine.Color;
-                _availableColors.Remove(_activeLine.Color);
-                _activeLine.PlayLineComplete();
-            }
-            else
-            {
-                _linePool.Release(_activeLine);
-            }
+            _lines.Add(_activeLine);
+            _wordColorsIndex.Add(GetColorIndex(_activeLine.Color));
+            _availableColors.Remove(_activeLine.Color);
+            _activeLine.PlayLineComplete();
 
             _activeLine = null;
             _lineStartCell = null;
         }
+
+        public void EraseLine()
+        {
+            if (_activeLine == null) return;
+            _linePool.Release(_activeLine);
+
+            _activeLine = null;
+            _lineStartCell = null;
+        }
+
 
         public void ClearSelectedLine()
         {

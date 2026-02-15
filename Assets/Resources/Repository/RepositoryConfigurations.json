@@ -93,10 +93,10 @@
   },
   "Repository.UserData.UserDataRepository": {
     "name": "UserDataRepository",
-    "default_value": ""
+    "default_value": "{}"
   },
-  "Repository.Puzzle.PuzzleRepository": {
-    "name": "PuzzleRepository",
-    "default_value": ""
+  "Repository.PuzzleSaveData.PuzzleSaveDataRepository": {
+    "name": "PuzzleSaveDataRepository",
+    "default_value": "{}"
   }
 }

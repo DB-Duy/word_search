@@ -38,6 +38,6 @@ namespace Shared.Core.View.Scene
 
         // Halo
         T ShowHalo<T>(GameObject target) where T : MonoBehaviour, IUIHalo;
-        void HideHalo(MonoBehaviour monoBehaviour);
+        void HideHalo(IUIHalo monoBehaviour);
     }
 }

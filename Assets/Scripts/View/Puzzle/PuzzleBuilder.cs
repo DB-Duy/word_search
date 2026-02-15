@@ -65,6 +65,7 @@ namespace View.Puzzle
 
                 cell.Index = idx;
                 cell.SetLetter(level.LetterAt(idx));
+                cell.transform.SetAsLastSibling();
 
                 // bool isDead = level.DeadLetterIndices.Contains(idx);
                 // cell.SetDead(isDead);
@@ -99,6 +100,26 @@ namespace View.Puzzle
                 float cellHeight = availableHeight / rows;
 
                 _gridLayoutGroup.cellSize = new Vector2(cellWidth, cellHeight);
+            }
+        }
+
+        public void GetWordStartEnd(string world, out PuzzleCell startCell, out PuzzleCell endCell)
+        {
+            startCell = null;
+            endCell = null;
+
+            int rows = _level.Rows;
+            int cols = _level.Cols;
+
+            for (int idx = 0; idx < _level.CellCount; idx++)
+            {
+                var path = FindWordPath(world, idx, rows, cols);
+                if (path != null)
+                {
+                    startCell = GetCellAtIndex(path[0]);
+                    endCell = GetCellAtIndex(path[^1]);
+                    return;
+                }
             }
         }
 

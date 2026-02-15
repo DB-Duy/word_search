@@ -16,8 +16,10 @@ namespace View.Puzzle
         [Header("Styles")] public Color normalColor = Color.black;
         [SerializeField] private Color highlightColor = Color.white;
         [SerializeField] private Image _bgImage;
-        private Sequence _highlightSequence;
+        private Tween _highlightTween;
+        private Tween _selectTween;
         private bool _isHighlighted;
+        private bool _isSelected;
         public float FontSize => tmpText.fontSize;
 
         public void SetLetter(char c)
@@ -26,10 +28,21 @@ namespace View.Puzzle
             tmpText.SetText(c.ToString());
         }
 
+        public void PlayCompletedAnim()
+        {
+            Vector3 punch = new Vector3(1.1f, 1.1f, 1.1f);
+            var textT = tmpText.transform;
+            float duration = 0.1f;
+            Sequence.Create()
+                .Group(Tween.Scale(textT, punch, duration, Ease.InBack))
+                .Chain(Tween.Scale(textT, Vector3.one, duration, Ease.InQuad));
+        }
+
         private void OnEnable()
         {
             _isHighlighted = true;
             SetHighlighted(false, true);
+            SetSelected(false);
         }
 
         public void SetHighlighted(bool highlighted, bool immediate = false)
@@ -43,15 +56,26 @@ namespace View.Puzzle
             }
             else
             {
-                if (_highlightSequence.isAlive)
+                if (_highlightTween.isAlive)
                 {
-                    _highlightSequence.Stop();
+                    _highlightTween.Stop();
                 }
 
-                _highlightSequence = Sequence.Create()
-                    .Group(Tween.Color(tmpText, highlighted ? highlightColor : normalColor, 0.2f))
-                    .Group(Tween.Scale(tmpText.transform, Vector3.one * (highlighted ? 1.3f : 1f), 0.2f));
+                _highlightTween = Tween.Color(tmpText, highlighted ? highlightColor : normalColor, 0.2f);
             }
+        }
+
+        public void SetSelected(bool selected)
+        {
+            if (selected == _isSelected) return;
+            _isSelected = selected;
+
+            if (_selectTween.isAlive)
+            {
+                _selectTween.Stop();
+            }
+
+            _selectTween = Tween.Scale(tmpText.transform, Vector3.one * (selected ? 1.3f : 1f), 0.2f);
         }
     }
 }

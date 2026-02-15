@@ -32,7 +32,7 @@ namespace View.Puzzle
         {
             Vector3 punch = new Vector3(1.1f, 1.1f, 1.1f);
             float duration = 0.1f;
-            PrimeTween.Sequence.Create()
+            Sequence.Create()
                 .Group(Tween.Scale(transform, punch, duration, PrimeTween.Ease.InBack))
                 .Chain(Tween.Scale(transform, Vector3.one, duration, PrimeTween.Ease.InQuad));
         }

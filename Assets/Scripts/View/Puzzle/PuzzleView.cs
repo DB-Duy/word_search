@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Entity.PuzzleSaveData;
+using Service.Gameplay;
 using Service.Puzzle;
 using Shared;
 using Shared.Core.IoC;
@@ -27,6 +29,7 @@ namespace View.Puzzle
         public BoardOrientation boardOrientation = BoardOrientation.Normal;
 
         [Inject] private PuzzleService _puzzleService;
+        [Inject] private GameplayService _gameplayService;
 
         [Header("Scene References")] public GridLayoutGroup gridLayoutGroup;
         public PuzzleCell cellPrefab;
@@ -47,6 +50,7 @@ namespace View.Puzzle
         private HashSet<int> _foundTargetWordIndices = new HashSet<int>();
         public HashSet<int> FoundTargetWordIndices => _foundTargetWordIndices;
         public bool IsRotating { get; private set; }
+        public bool WordsCompleted { get; private set; }
 
         protected override void Awake()
         {
@@ -74,6 +78,7 @@ namespace View.Puzzle
             _cellSelector = new CellSelector(_puzzleBuilder, _puzzleService, this, _selectionLineHandler,
                 _selectedWordView, _targetWordsView);
             _targetWordsView.Init(_puzzleBuilder, this);
+            _selectedWordView.Init(_selectionLineHandler);
         }
 
         private void Start()
@@ -84,7 +89,7 @@ namespace View.Puzzle
 
         private void OnFlipBoardButtonPressed()
         {
-            if (IsRotating) return;
+            if (IsRotating || WordsCompleted) return;
             // Prevent mid-drag mismatches; the current selection is not re-projected.
             _selectionLineHandler?.ClearSelectedLine();
             _selectedWordView?.SetWord(null);
@@ -95,6 +100,9 @@ namespace View.Puzzle
 
             // ApplyBoardOrientationVisuals();
             this.StartSharedCoroutine(RotateBoardRoutine());
+            var save = _puzzleService.SaveData;
+            save.IsBoardRotated = boardOrientation == BoardOrientation.Rot180;
+            _puzzleService.SavePuzzleData(save);
         }
 
         private IEnumerator RotateBoardRoutine()
@@ -107,17 +115,17 @@ namespace View.Puzzle
 
             IsRotating = true;
 
-            var boardRect = gridLayoutGroup.transform as RectTransform;
+            var boardRect = (RectTransform)gridLayoutGroup.transform;
             var linesRect = _linesContainer;
 
             var targetZ = boardOrientation == BoardOrientation.Rot180 ? 180f : 360f;
 
             // Cache starts
-            var boardStartScale = boardRect != null ? boardRect.localScale : gridLayoutGroup.transform.localScale;
-            var linesStartScale = linesRect != null ? linesRect.localScale : Vector3.one;
+            var boardStartScale = boardRect.localScale;
+            var linesStartScale = linesRect.localScale;
 
-            var boardStartRot = boardRect != null ? boardRect.localRotation : gridLayoutGroup.transform.localRotation;
-            var linesStartRot = linesRect != null ? linesRect.localRotation : Quaternion.identity;
+            var boardStartRot = boardRect.localRotation;
+            var linesStartRot = linesRect.localRotation;
 
             var boardTargetRot = Quaternion.Euler(0f, 0f, targetZ);
             var linesTargetRot = Quaternion.Euler(0f, 0f, targetZ);
@@ -139,60 +147,52 @@ namespace View.Puzzle
             {
                 var a = Mathf.SmoothStep(0f, 1f, t / shrinkDuration);
 
-                if (boardRect != null) boardRect.localScale = Vector3.Lerp(boardStartScale, shrinkScale, a);
-                else gridLayoutGroup.transform.localScale = Vector3.Lerp(boardStartScale, shrinkScale, a);
+                boardRect.localScale = Vector3.Lerp(boardStartScale, shrinkScale, a);
 
-                if (linesRect != null) linesRect.localScale = Vector3.Lerp(linesStartScale, shrinkScaleLines, a);
+                linesRect.localScale = Vector3.Lerp(linesStartScale, shrinkScaleLines, a);
 
                 yield return null;
             }
 
-            if (boardRect != null) boardRect.localScale = shrinkScale;
-            else gridLayoutGroup.transform.localScale = shrinkScale;
-            if (linesRect != null) linesRect.localScale = shrinkScaleLines;
+            boardRect.localScale = shrinkScale;
+            linesRect.localScale = shrinkScaleLines;
 
             // Phase 2: rotate to target
             for (float t = 0f; t < rotateDuration; t += Time.unscaledDeltaTime)
             {
                 var a = Mathf.SmoothStep(0f, 1f, t / rotateDuration);
 
-                if (boardRect != null) boardRect.localRotation = Quaternion.Slerp(boardStartRot, boardTargetRot, a);
-                else gridLayoutGroup.transform.localRotation = Quaternion.Slerp(boardStartRot, boardTargetRot, a);
+                boardRect.localRotation = Quaternion.Slerp(boardStartRot, boardTargetRot, a);
 
-                if (linesRect != null) linesRect.localRotation = Quaternion.Slerp(linesStartRot, linesTargetRot, a);
+                linesRect.localRotation = Quaternion.Slerp(linesStartRot, linesTargetRot, a);
 
                 // Keep cells visually upright relative to the board (match board rotation).
                 for (var i = _puzzleBuilder.Cells.Count - 1; i >= 0; i--)
                 {
                     var cell = _puzzleBuilder.Cells[i];
-                    if (cell != null)
-                        cell.transform.localRotation = Quaternion.Euler(0f, 0f,
-                            Mathf.LerpAngle(boardStartRot.eulerAngles.z, targetZ, a));
+                    cell.transform.localRotation = Quaternion.Euler(0f, 0f,
+                        Mathf.LerpAngle(boardStartRot.eulerAngles.z, targetZ, a));
                 }
 
                 yield return null;
             }
 
-            if (boardRect != null) boardRect.localRotation = boardTargetRot;
-            else gridLayoutGroup.transform.localRotation = boardTargetRot;
-            if (linesRect != null) linesRect.localRotation = linesTargetRot;
+            boardRect.localRotation = boardTargetRot;
+            linesRect.localRotation = linesTargetRot;
 
             // Phase 3: expand back
             for (float t = 0f; t < expandDuration; t += Time.unscaledDeltaTime)
             {
                 var a = Mathf.SmoothStep(0f, 1f, t / expandDuration);
+                boardRect.localScale = Vector3.Lerp(shrinkScale, boardStartScale, a);
 
-                if (boardRect != null) boardRect.localScale = Vector3.Lerp(shrinkScale, boardStartScale, a);
-                else gridLayoutGroup.transform.localScale = Vector3.Lerp(shrinkScale, boardStartScale, a);
-
-                if (linesRect != null) linesRect.localScale = Vector3.Lerp(shrinkScaleLines, linesStartScale, a);
+                linesRect.localScale = Vector3.Lerp(shrinkScaleLines, linesStartScale, a);
 
                 yield return null;
             }
 
-            if (boardRect != null) boardRect.localScale = boardStartScale;
-            else gridLayoutGroup.transform.localScale = boardStartScale;
-            if (linesRect != null) linesRect.localScale = linesStartScale;
+            boardRect.localScale = boardStartScale;
+            linesRect.localScale = linesStartScale;
 
             // Snap final visuals to avoid drift.
             ApplyBoardOrientationVisuals();
@@ -204,39 +204,62 @@ namespace View.Puzzle
         {
             var zRot = boardOrientation == BoardOrientation.Rot180 ? 180f : 0f;
 
-            if (gridLayoutGroup != null)
-            {
-                var t = gridLayoutGroup.transform as RectTransform;
-                if (t != null) t.localRotation = Quaternion.Euler(0f, 0f, zRot);
-                else gridLayoutGroup.transform.localRotation = Quaternion.Euler(0f, 0f, zRot);
-            }
-
-            if (_linesContainer != null)
-            {
-                _linesContainer.localRotation = Quaternion.Euler(0f, 0f, zRot);
-            }
+            var t = gridLayoutGroup.transform;
+            t.localRotation = Quaternion.Euler(0f, 0f, zRot);
+            
+            _linesContainer.localRotation = Quaternion.Euler(0f, 0f, zRot);
 
             for (var i = _puzzleBuilder.Cells.Count - 1; i >= 0; i--)
             {
                 var cell = _puzzleBuilder.Cells[i];
-                if (cell != null)
-                {
-                    cell.transform.localRotation = Quaternion.Euler(0f, 0f, zRot);
-                }
+                cell.transform.localRotation = Quaternion.Euler(0f, 0f, zRot);
             }
         }
 
         public void SetupPuzzle(GamePuzzle level)
         {
+            // Reset per-level state so subsequent levels don't inherit stale data.
+            WordsCompleted = false;
+            IsRotating = false;
+
+            // Clear any in-progress selection / UI from previous level.
+            _selectionLineHandler.ClearSelectedLine();
+            _selectedWordView.SetWord(null);
+
+            // Reset found/target words collections before we add the new level data.
+            _targetWords.Clear();
+            _foundTargetWordIndices.Clear();
+
+            // Reset orientation to a canonical state for new level visuals.
+            boardOrientation = BoardOrientation.Normal;
+            ApplyBoardOrientationVisuals();
+
+            // Now apply the new level content.
             titleLabel.text = level.Title;
             _puzzleBuilder.SetupPuzzle(level);
             _cellSelector.SetLevel(level);
-            _targetWords.Clear();
-            _foundTargetWordIndices.Clear();
             _targetWords.AddRange(level.TargetWords);
-            _selectionLineHandler.RefreshColors();
-            _selectedWordView.Init(_selectionLineHandler);
+
+            _selectionLineHandler.OnNewPuzzle();
             _targetWordsView.SpawnWords();
+        }
+
+        public void LoadData(PuzzleSaveDataEntity puzzleServiceSaveData)
+        {
+            var solvedWords = puzzleServiceSaveData.SolvedWords;
+            _foundTargetWordIndices.Clear();
+            for (int i = 0; i < solvedWords.Count; i++)
+            {
+                var word = solvedWords[i];
+                var idx = word.WordIndex;
+                if (idx < 0 || idx >= _targetWords.Count) continue;
+
+                _foundTargetWordIndices.Add(idx);
+                _puzzleBuilder.GetWordStartEnd(_targetWords[idx].Word, out var start, out var end);
+                _selectionLineHandler.SetCompletedLine(start, end, word.ColorIndex);
+            }
+
+            _targetWordsView.SyncWordsCompleted();
         }
 
         public void AddFoundWord(TargetWord foundWord)
@@ -246,7 +269,33 @@ namespace View.Puzzle
             {
                 _foundTargetWordIndices.Add(idx);
             }
+
+            var save = _puzzleService.SaveData;
+            save.SolvedWords.Add(new PuzzleSaveDataEntity.SolvedWord()
+            {
+                WordIndex = idx,
+                ColorIndex = _selectionLineHandler.WordColorsIndex[^1]
+            });
+            _puzzleService.SavePuzzleData(save);
+
+            this.StartSharedCoroutine(CheckAllWordsFoundRoutine());
         }
+
+        private IEnumerator CheckAllWordsFoundRoutine()
+        {
+            WordsCompleted = _foundTargetWordIndices.Count == _targetWords.Count;
+            yield return null;
+            while (TargetWordsView.LettersAnimPlaying || CompletedEffectsView.IsPlayingCompletedEffects)
+            {
+                yield return null;
+            }
+
+            if (WordsCompleted)
+            {
+                _gameplayService.LevelCompleted();
+            }
+        }
+
 
         public bool ValidateWord(string word, string reversed, out TargetWord foundWord, out bool isReversed)
         {
@@ -283,3 +332,4 @@ namespace View.Puzzle
         }
     }
 }
+
